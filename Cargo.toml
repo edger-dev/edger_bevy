@@ -14,10 +14,10 @@ members = [
 ]
 
 [workspace.dependencies]
-edger_bevy_egui = { path = "crates/egui" }
-edger_bevy_view = { path = "crates/view" }
-edger_bevy_shape = { path = "crates/shape" }
-edger_bevy_util = { path = "crates/util" }
+edger_bevy_egui = { path = "crates/egui", version = "0.1.0" }
+edger_bevy_view = { path = "crates/view", version = "0.1.0" }
+edger_bevy_shape = { path = "crates/shape", version = "0.1.0" }
+edger_bevy_util = { path = "crates/util", version = "0.1.0" }
 
 # Bevy
 bevy = { version = "0.13.0", default-features = false }
