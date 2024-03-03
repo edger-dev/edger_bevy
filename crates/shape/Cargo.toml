@@ -2,6 +2,7 @@
 publish = true
 name = "edger_bevy_shape"
 version = "0.1.0"
+description = "edger.dev drawing 2D shapes easily"
 
 edition.workspace = true
 license.workspace = true

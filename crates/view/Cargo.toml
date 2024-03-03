@@ -2,6 +2,7 @@
 publish = true
 name = "edger_bevy_view"
 version = "0.1.0"
+description = "edger.dev view abstraction with common layout support"
 
 edition.workspace = true
 license.workspace = true

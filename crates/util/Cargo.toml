@@ -2,6 +2,7 @@
 publish = true
 name = "edger_bevy_util"
 version = "0.1.0"
+description = "edger.dev bevy utilities"
 
 edition.workspace = true
 license.workspace = true

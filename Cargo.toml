@@ -45,6 +45,7 @@ web-sys = { version = "0.3.64", features = [
 publish = true
 name = "edger_bevy"
 version = "0.1.0"
+description = "edger.dev shared logic for bevy applications and libraries"
 
 edition.workspace = true
 license.workspace = true
