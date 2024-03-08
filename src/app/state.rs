@@ -21,6 +21,7 @@ impl AppState {
         )
     }
 
+    #[cfg(feature = "assets")]
     pub fn get_asset<A: Asset>(&self, path: PathBuf) -> Option<Handle<A>> {
         let handle_path = AssetPath::from(path);
         let mut handle = None;
