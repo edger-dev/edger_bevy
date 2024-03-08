@@ -7,6 +7,11 @@ pub mod bevy_prelude {
     pub use bevy::reflect as bevy_reflect;
 }
 
+#[cfg(feature = "assets")]
+pub mod assets;
+
+pub mod app;
+
 pub use edger_bevy_util;
 
 #[cfg(feature = "shape")]
@@ -27,7 +32,17 @@ pub use edger_bevy_egui::bevy_egui;
 #[cfg(feature = "egui")]
 pub use edger_bevy_egui::egui;
 
+#[cfg(feature = "assets")]
+pub use bevy_asset_loader;
+
 pub mod prelude {
+    pub use crate::app::events::{WindowResizedEvent, MouseClickedEvent, MouseDraggedEvent};
+    pub use crate::app::state::AppState;
+    pub use crate::app::run_2d_app;
+
+    #[cfg(feature = "assets")]
+    pub use crate::assets::{PreloadAssets, AssetsPlugin, AssetsStates, init_preload_assets, insert_preload_assets, add_assets_loaded_systems, register_file_asset};
+
     #[doc(hidden)]
     pub use edger_bevy_util::prelude::*;
 

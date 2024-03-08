@@ -3,6 +3,9 @@ pub use bevy_egui::egui;
 
 pub mod easy_link;
 pub mod helper;
+pub mod font;
+pub mod font_loader;
+pub mod plugin;
 
 mod easy_mark;
 pub use crate::easy_mark::easy_mark_parser;
@@ -26,4 +29,12 @@ pub mod prelude {
 
     #[doc(hidden)]
     pub use crate::helper::{color_to_hsva, label_from_style, link_from_style};
+
+    #[doc(hidden)]
+    pub use crate::font::{EguiFont, EguiFontSizes};
+
+    pub use crate::font_loader::EguiFontAssetLoader;
+
+    #[doc(hidden)]
+    pub use crate::plugin::EguiPlugin;
 }

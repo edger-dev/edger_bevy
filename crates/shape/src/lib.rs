@@ -7,6 +7,7 @@ pub mod path;
 pub mod rectangle;
 pub mod shape;
 pub mod shapes;
+pub mod plugin;
 
 pub mod prelude {
     #[doc(hidden)]
@@ -23,5 +24,7 @@ pub mod prelude {
     pub use crate::shape::{ShapeOp, SingleShape};
     #[doc(hidden)]
     pub use crate::shapes::DoubleShape;
+    #[doc(hidden)]
+    pub use crate::plugin::ShapePlugin;
 }
 
