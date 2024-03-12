@@ -52,7 +52,7 @@ pub fn item_ui(ui: &mut Ui, item: easy_mark::Item<'_>, link_evts: &mut EventWrit
             }
         }
         easy_mark::Item::Hyperlink(style, text, url) => {
-            let label = rich_text_from_style(text, &style);
+            //let label = rich_text_from_style(text, &style);
             if style.small && !style.raised {
                 ui.with_layout(Layout::left_to_right(Align::BOTTOM), |ui| {
                     ui.set_height(row_height);

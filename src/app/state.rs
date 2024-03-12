@@ -1,5 +1,9 @@
-use std::path::PathBuf;
 use bevy::prelude::*;
+
+#[cfg(feature = "assets")]
+use std::path::PathBuf;
+
+#[cfg(feature = "assets")]
 use bevy::asset::{AssetPath, Asset};
 
 #[derive(Resource, Default)]

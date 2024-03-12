@@ -350,18 +350,18 @@ pub trait GridView<TE: LayoutEnv, TC: GridCell<TE>>: View<TE> {
     fn sort_cells(&self) -> bool {
         false
     }
-    fn calc_grid_data(&self, engine: &TE, grid_size: LayoutSize) -> GridData;
+    fn calc_grid_data(&self, env: &TE, grid_size: LayoutSize) -> GridData;
     #[allow(unused_variables)]
-    fn calc_row_col(&self, engine: &TE, grid_data: &GridData, index: usize) -> (usize, usize) {
+    fn calc_row_col(&self, env: &TE, grid_data: &GridData, index: usize) -> (usize, usize) {
         grid_data.calc_row_col(index)
     }
     #[allow(unused_variables)]
-    fn calc_cell_offset(&self, engine: &TE, grid_data: &GridData, row: usize, col: usize) -> Vec2 {
+    fn calc_cell_offset(&self, env: &TE, grid_data: &GridData, row: usize, col: usize) -> Vec2 {
         grid_data.calc_cell_offset(row, col)
     }
     fn calc_cell_size(
         &self,
-        _engine: &TE,
+        _env: &TE,
         grid_data: &GridData,
         row: usize,
         col: usize,
@@ -371,14 +371,14 @@ pub trait GridView<TE: LayoutEnv, TC: GridCell<TE>>: View<TE> {
     fn do_layout(
         &self,
         commands: &mut Commands,
-        engine: &TE,
+        env: &TE,
         layout_query: &mut LayoutQuery,
         cell_query: &ViewQuery<TC>,
         entity: Entity,
         data: LayoutData,
     ) {
-        let grid_data = self.calc_grid_data(engine, data.size);
-        let mut cells = engine.get_children(cell_query, entity);
+        let grid_data = self.calc_grid_data(env, data.size);
+        let mut cells = env.get_children(cell_query, entity);
         if self.sort_cells() {
             cells.sort_by(|a, b| a.view.order().cmp(&b.view.order()));
         }
@@ -391,9 +391,9 @@ pub trait GridView<TE: LayoutEnv, TC: GridCell<TE>>: View<TE> {
         );
          */
         for (index, cell) in cells.iter().enumerate() {
-            let (row, col) = self.calc_row_col(engine, &grid_data, index);
-            let offset = self.calc_cell_offset(engine, &grid_data, row, col);
-            let size = self.calc_cell_size(engine, &grid_data, row, col);
+            let (row, col) = self.calc_row_col(env, &grid_data, index);
+            let offset = self.calc_cell_offset(env, &grid_data, row, col);
+            let size = self.calc_cell_size(env, &grid_data, row, col);
             cell.set_layout_data(
                 layout_query,
                 data.new_child(LayoutAnchor::TOP_LEFT, offset, size),

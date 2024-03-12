@@ -39,6 +39,9 @@ where
     #[cfg(feature = "shape")]
     app.add_plugins(ShapePlugin);
 
+    #[cfg(feature = "view")]
+    app.add_plugins(ViewPlugin);
+
     #[cfg(feature = "egui")]
     app.add_plugins(EguiPlugin);
 

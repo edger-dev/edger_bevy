@@ -9,6 +9,8 @@ pub mod layout;
 #[cfg(feature = "shape")]
 pub mod shape;
 
+pub mod plugin;
+
 pub mod prelude {
     #[doc(hidden)]
     pub use edger_bevy_util::prelude::*;
@@ -32,6 +34,10 @@ pub mod prelude {
     #[doc(hidden)]
     pub use crate::layout::view::{
         DoLayoutEvent, LayoutChangedQuery, LayoutChangedWithChildrenQuery, LayoutEnv, LayoutQuery,
-        View, ViewAddedQuery, ViewEntity, ViewQuery, ViewRootAddedQuery, ViewRootQuery,
+        View, ViewAddedQuery, ViewEntity, ViewQuery, RootViewAddedQuery, RootViewQuery,
     };
+    #[doc(hidden)]
+    pub use crate::plugin::ViewPlugin;
+
+
 }

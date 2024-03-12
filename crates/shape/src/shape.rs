@@ -46,16 +46,16 @@ pub trait SingleShape<T: Geometry>: Shape {
     }
 }
 
-pub trait ShapeOp<Theme, S: Shape>: Clone + Component {
-    fn get_shape(&self, theme: &Theme) -> S;
-    fn create(&self, commands: &mut Commands, theme: &Theme, parent: Entity) -> Entity {
-        let shape = self.get_shape(theme);
+pub trait ShapeOp<Env, S: Shape>: Clone + Component {
+    fn get_shape(&self, env: &Env) -> S;
+    fn create(&self, commands: &mut Commands, env: &Env, parent: Entity) -> Entity {
+        let shape = self.get_shape(env);
         let shape_entity = shape.create(commands, parent);
         commands.entity(shape_entity).insert(self.clone());
         shape_entity
     }
-    fn update(&self, commands: &mut Commands, theme: &Theme, entity: Entity) {
-        let shape = self.get_shape(theme);
+    fn update(&self, commands: &mut Commands, env: &Env, entity: Entity) {
+        let shape = self.get_shape(env);
         shape.update(commands, entity);
     }
 }

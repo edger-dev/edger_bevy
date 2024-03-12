@@ -31,29 +31,29 @@ impl DockSide {
 }
 
 pub trait DockPanel<TE: LayoutEnv>: View<TE> {
-    fn dock_side(&self, engine: &TE, size: LayoutSize) -> DockSide;
+    fn dock_side(&self, env: &TE, size: LayoutSize) -> DockSide;
 }
 
 pub trait DockView<TE: LayoutEnv, TP: DockPanel<TE>, TC: View<TE>>: View<TE> {
     fn do_layout(
         &self,
-        engine: &TE,
+        env: &TE,
         layout_query: &mut LayoutQuery,
         panel_query: &ViewQuery<TP>,
         content_query: &ViewQuery<TC>,
         entity: Entity,
         data: LayoutData,
     ) {
-        let panel = engine.get_child(panel_query, entity);
-        let content = engine.get_child(content_query, entity);
+        let panel = env.get_child(panel_query, entity);
+        let content = env.get_child(content_query, entity);
         if panel.is_none() || content.is_none() {
             return;
         }
         let panel = panel.unwrap();
         let content = content.unwrap();
         let panel_constraint = LayoutConstraint::from(data);
-        let panel_size = panel.view.calc_size(engine, panel_constraint);
-        let dock_side = panel.view.dock_side(engine, data.size);
+        let panel_size = panel.view.calc_size(env, panel_constraint);
+        let dock_side = panel.view.dock_side(env, data.size);
         let panel_anchor = LayoutAnchor::from(dock_side);
         panel.set_layout_data(
             layout_query,

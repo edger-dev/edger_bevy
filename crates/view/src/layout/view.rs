@@ -68,8 +68,8 @@ pub type LayoutChangedWithChildrenQuery<'w, 's, 'v, 'd, 'c, T> =
     Query<'w, 's, (Entity, &'v T, &'d LayoutData, &'c Children), Changed<LayoutData>>;
 pub type ViewQuery<'w, 's, 'p, 'v, T> = Query<'w, 's, (&'p Parent, Entity, &'v T)>;
 pub type ViewAddedQuery<'w, 's, 'p, 'v, T> = Query<'w, 's, (&'p Parent, Entity, &'v T), Added<T>>;
-pub type ViewRootQuery<'w, 's, 'v, T> = Query<'w, 's, (Entity, &'v T)>;
-pub type ViewRootAddedQuery<'w, 's, 'v, T> = Query<'w, 's, (Entity, &'v T), Added<T>>;
+pub type RootViewQuery<'w, 's, 'v, T> = Query<'w, 's, (Entity, &'v T)>;
+pub type RootViewAddedQuery<'w, 's, 'v, T> = Query<'w, 's, (Entity, &'v T), Added<T>>;
 
 #[derive(Debug, Snafu)]
 pub enum Error {
@@ -144,9 +144,6 @@ pub trait LayoutEnv {
 }
 
 pub trait View<TE: LayoutEnv>: Any + Component + Clone + ToString {
-    fn is_root(&self) -> bool {
-        false
-    }
     fn log_set_layout(&self) -> bool {
         false
     }
@@ -154,28 +151,20 @@ pub trait View<TE: LayoutEnv>: Any + Component + Clone + ToString {
         false
     }
     fn pivot(&self) -> LayoutAnchor {
-        if self.is_root() {
-            LayoutAnchor::ROOT
-        } else {
-            LayoutAnchor::default()
-        }
+        LayoutAnchor::default()
     }
     #[allow(unused_variables)]
-    fn calc_size(&self, engine: &TE, constraint: LayoutConstraint) -> LayoutSize {
+    fn calc_size(&self, env: &TE, constraint: LayoutConstraint) -> LayoutSize {
         constraint.max
     }
-    fn calc_root_layout(&self, engine: &TE, constraint: LayoutConstraint) -> LayoutData {
-        let size = self.calc_size(engine, constraint);
-        let pivot = LayoutAnchor::ROOT;
-        LayoutData::new(0, size, pivot, pivot, Vec2::ZERO)
+    #[allow(unused_variables)]
+    fn calc_root_layout(&self, commands: &mut Commands, constraint: LayoutConstraint) -> LayoutData {
+        let size = constraint.max;
+        LayoutData::new(0, size, LayoutAnchor::CENTER, LayoutAnchor::CENTER, Vec2::ZERO)
     }
     fn set_layout_data(&self, layout_query: &mut LayoutQuery, entity: Entity, data: LayoutData) {
-        if self.is_root() {
-            println!("Should NOT call set_layout_data() for root views! {}", data);
-            return;
-        }
         let pivot = self.pivot();
-        let need_adjust = pivot != data.pivot;
+        let need_adjust = data.depth > 0 && pivot != data.pivot;
         let adjusted = if need_adjust {
             data.change_pivot(pivot)
         } else {

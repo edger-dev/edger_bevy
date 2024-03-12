@@ -21,13 +21,13 @@ pub trait VBoxView<TE: LayoutEnv, TC: VBoxCell<TE>>: View<TE> {
     fn do_layout(
         &self,
         commands: &mut Commands,
-        engine: &TE,
+        env: &TE,
         layout_query: &mut LayoutQuery,
         cell_query: &ViewQuery<TC>,
         entity: Entity,
         data: LayoutData,
     ) {
-        let mut cells = engine.get_children(cell_query, entity);
+        let mut cells = env.get_children(cell_query, entity);
         if self.sort_cells() {
             cells.sort_by(|a, b| a.view.order().cmp(&b.view.order()));
         }
@@ -35,7 +35,7 @@ pub trait VBoxView<TE: LayoutEnv, TC: VBoxCell<TE>>: View<TE> {
         let mut height = data.size.height;
         for (index, cell) in cells.iter().enumerate() {
             let cell_constraint = LayoutConstraint::new(LayoutSize::new(data.size.width, height));
-            let cell_size = cell.view.calc_size(engine, cell_constraint);
+            let cell_size = cell.view.calc_size(env, cell_constraint);
             cell.set_layout_data(
                 layout_query,
                 data.new_child(LayoutAnchor::TOP_LEFT, Vec2::new(0.0, y), cell_size),

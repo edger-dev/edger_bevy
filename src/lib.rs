@@ -23,6 +23,9 @@ pub use edger_bevy_shape::bevy_prototype_lyon;
 #[cfg(feature = "view")]
 pub use edger_bevy_view;
 
+#[cfg(feature = "view")]
+pub mod view;
+
 #[cfg(feature = "egui")]
 pub use edger_bevy_egui;
 
@@ -53,6 +56,10 @@ pub mod prelude {
     #[cfg(feature = "view")]
     #[doc(hidden)]
     pub use edger_bevy_view::prelude::*;
+
+    #[cfg(feature = "view")]
+    #[doc(hidden)]
+    pub use crate::view::root_layout::DoRootLayoutEvent;
 
     #[cfg(feature = "egui")]
     #[doc(hidden)]
