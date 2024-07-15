@@ -3,8 +3,7 @@ use rand::Rng;
 use bevy::prelude::*;
 
 fn color_of_hex(hex: &str) -> Color {
-    let color = Color::hex(hex).unwrap();
-    color.as_rgba_linear()
+    Srgba::hex(hex).unwrap().into()
 }
 
 #[derive(Copy, Clone, PartialEq, Debug, Default, Resource)]
@@ -39,11 +38,11 @@ impl LayoutDevTheme {
     pub fn get_view_color(&self) -> Color {
         let mut rng = rand::thread_rng();
         let hue = rng.gen_range(0.0..360.0);
-        Color::Hsla {
+        Hsla {
             hue,
             saturation: 0.5,
             lightness: 0.5,
             alpha: 0.5,
-        }
+        }.into()
     }
 }

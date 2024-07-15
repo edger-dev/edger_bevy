@@ -1,5 +1,7 @@
 use bevy::prelude::*;
 
+use unic_langid::LanguageIdentifier;
+
 #[cfg(feature = "assets")]
 use std::path::PathBuf;
 
@@ -8,6 +10,7 @@ use bevy::asset::{AssetPath, Asset};
 
 #[derive(Resource, Default)]
 pub struct AppState {
+    pub lang: LanguageIdentifier,
     pub window_width: f32,
     pub window_height: f32,
     pub window_scale_factor: f32,

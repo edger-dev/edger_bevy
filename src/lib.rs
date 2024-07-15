@@ -7,6 +7,8 @@ pub mod bevy_prelude {
     pub use bevy::reflect as bevy_reflect;
 }
 
+pub use unic_langid;
+
 #[cfg(feature = "assets")]
 pub mod assets;
 

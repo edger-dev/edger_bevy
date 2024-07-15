@@ -14,28 +14,30 @@ members = [
 ]
 
 [workspace.dependencies]
-edger_bevy_util = { path = "crates/util", version = "0.1.0" }
-edger_bevy_egui = { path = "crates/egui", version = "0.2.0" }
-edger_bevy_shape = { path = "crates/shape", version = "0.2.0" }
-edger_bevy_view = { path = "crates/view", version = "0.3.0" }
+edger_bevy_util = { path = "crates/util", version = "0.5.0" }
+edger_bevy_egui = { path = "crates/egui", version = "0.5.0" }
+edger_bevy_shape = { path = "crates/shape", version = "0.5.0" }
+edger_bevy_view = { path = "crates/view", version = "0.5.0" }
+
+unic-langid = { version = "0.9", features = [ "macros" ] }
 
 # Bevy
-bevy = { version = "0.13.0", default-features = false }
-bevy_egui = { version = "0.25.0" }
-bevy_prototype_lyon = "0.11.0"
-anyhow = "1.0.80"
-bevy_asset_loader = "0.20.0"
+bevy = { version = "0.14.0", default-features = false }
+bevy_egui = { version = "0.28.0" }
+bevy_prototype_lyon = "0.12.0"
+anyhow = "1.0.86"
+bevy_asset_loader = "0.21.0"
 
 rand = "0.8.5"
-snafu = "0.8.1"
-lazy_static = "1.4"
+snafu = "0.8.4"
+lazy_static = "1.5.0"
 
 # [target.'cfg(target_arch = "wasm32")'.workspace.dependencies]
-wasm-bindgen = "0.2.91"
+wasm-bindgen = "0.2.92"
 console_error_panic_hook = "0.1.7"
 gloo-events = "0.2.0"
 futures = "0.3.30"
-web-sys = { version = "0.3.64", features = [
+web-sys = { version = "0.3.69", features = [
     "Element", "Document", "Window", "Location", "Url", "UrlSearchParams", "console", "TouchEvent",
     #https://rustwasm.github.io/docs/wasm-bindgen/examples/web-audio.html
     "AudioContext", "AudioDestinationNode", "AudioNode", "AudioParam", "GainNode", "OscillatorNode", "OscillatorType",
@@ -46,7 +48,7 @@ web-sys = { version = "0.3.64", features = [
 [package]
 publish = true
 name = "edger_bevy"
-version = "0.4.0"
+version = "0.5.0"
 description = "edger.dev shared logic for bevy applications and libraries"
 
 edition.workspace = true
@@ -109,6 +111,8 @@ edger_bevy_egui = { workspace = true, optional = true }
 
 bevy = { workspace = true }
 bevy_asset_loader = { workspace = true, optional = true }
+
+unic-langid = { workspace = true }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 wasm-bindgen = { workspace = true }

@@ -7,8 +7,8 @@ use crate::prelude::easy_mark_viewer;
 use crate::prelude::EasyMarkStyle;
 
 pub fn color_to_hsva(color: &Color) -> Hsva {
-    let v = color.as_linear_rgba_f32();
-    Hsva::from_rgb([v[0], v[1], v[2]])
+    let v = LinearRgba::from(*color);
+    Hsva::from_rgb([v.red, v.green, v.blue])
 }
 
 pub fn label_from_style(text: &str, style: &EasyMarkStyle) -> Label {
