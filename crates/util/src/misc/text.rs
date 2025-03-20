@@ -13,41 +13,38 @@ pub fn spawn(
     y: f32,
     z: f32,
 ) -> Entity {
-    let style = TextStyle {
+    let text_font = TextFont {
         font,
         font_size,
-        color,
+        ..Default::default()
     };
     let text_entity = commands
-        .spawn(Text2dBundle {
-            text: Text::from_section(text, style).with_justify(justify),
-            transform: Transform::from_xyz(x, y, z),
-            text_anchor: anchor,
-            ..Default::default()
-        })
+        .spawn((
+            Text2d::new(text),
+            TextLayout::new_with_justify(justify),
+            text_font,
+            TextColor::from(color),
+            Transform::from_xyz(x, y, z),
+            anchor,
+        ))
         .id();
-    commands.entity(entity).push_children(&[text_entity]);
+    commands.entity(entity).add_children(&[text_entity]);
     text_entity
 }
-pub fn set_size(text: &mut Text, font_size: f32) {
-    for section in text.sections.iter_mut() {
-        section.style.font_size = font_size;
-    }
+
+pub fn set_size(text_font: &mut TextFont, font_size: f32) {
+    text_font.font_size = font_size;
 }
-pub fn set_color(text: &mut Text, color: Color) {
-    for section in text.sections.iter_mut() {
-        section.style.color = color;
-    }
+
+pub fn set_color(text_color: &mut TextColor, color: Color) {
+    text_color.0 = color;
 }
-pub fn set_size_color(text: &mut Text, font_size: f32, color: Color) {
-    for section in text.sections.iter_mut() {
-        section.style.font_size = font_size;
-        section.style.color = color;
-    }
+
+pub fn set_size_color(text_font: &mut TextFont, text_color: &mut TextColor, font_size: f32, color: Color) {
+    set_size(text_font, font_size);
+    set_color(text_color, color);
 }
-pub fn set_value(text: &mut Text, v: String) {
-    for section in text.sections.iter_mut() {
-        section.value = v;
-        return;
-    }
+
+pub fn set_value(text: &mut Text2d, v: String) {
+    text.0 = v;
 }
